@@ -1,0 +1,27 @@
+syntax = "proto3";
+package axidraw_over_http;
+
+service AxidrawOverHttp {
+  rpc Stream(stream Command) returns (Empty) {}
+  rpc Clear(Empty) returns (Empty) {}
+  rpc Pause(Empty) returns (Empty) {}
+  rpc Resume(Empty) returns (Empty) {}
+  rpc GetState(Empty) returns (BufferState) {}
+}
+
+message Command {
+  string contents = 1;
+}
+
+message Empty {}
+
+message BufferState {
+  uint64 buffer_length = 1;
+  RunningStatus running_status = 2;
+}
+
+enum RunningStatus {
+  RUNNING_STATUS_UNSPECIFIED = 0;
+  RUNNING_STATUS_RUNNING = 1;
+  RUNNING_STATUS_PAUSED = 2;
+}
